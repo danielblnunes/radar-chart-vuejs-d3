@@ -1,18 +1,34 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <RadarChart :motifData="loadData" />
   </div>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
+import RadarChart from "./components/RadarChart.vue";
+import * as d3 from "d3";
 
 export default {
   name: "App",
   components: {
-    HelloWorld
-  }
+    RadarChart,
+  },
+
+  data() {
+    return {
+      loadData: [],
+    };
+  },
+  mounted() {
+    this.fetchData();
+  },
+
+  methods: {
+    async fetchData() {
+      let data = await d3.json("./team_motifs.json");
+      this.loadData = data;
+    },
+  },
 };
 </script>
 
